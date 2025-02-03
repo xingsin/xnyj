@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    .d1{
+        width: 100%;
+        height: 300px;
+        background-color: rgb(105, 105, 255);
+    }
+    .d2{
+        width: 200px;
+        height: 200px;
+        border: 2px solid rgba(81, 127, 254, 0.963);
+        background-color: rgb(78, 78, 255);
+        border-radius: 50vw;
+        line-height: 200px;
+        font-size: 23px;
+        color: white;
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .d2:hover{
+        background-color: rgb(61, 61, 248);
+    }
+    .d3{
+        width: 100%;
+        height: 60vh;
+        background-color: white;
+        border-radius: 3vw 3vw 0vw 0vw;
+        position: absolute;
+        bottom: 0;
+    }
+    .d3-1,.d3-2,.d3-3,.d3-4,.d3-5,.d3-6,.d3-7,.d3-8,.d3-9{
+        width: 100%;
+        height: 45px;
+        line-height: 45px;
+        background-color: white;
+        border-bottom: 1px solid #f3f3f3;
+        border-radius: 3vw 3vw 0vw 0vw;
+    }
+    .d3-1 b,.d3-2 b,.d3-3 b,.d3-4 b,.d3-5 b,.d3-6 b,.d3-7 b,.d3-8 b,.d3-9 b{
+        margin-left: 25px;
+        color: rgb(67, 67, 67);
+    }
+    .d3-1 p,.d3-2 p,.d3-3 p,.d3-4 p,.d3-5 p,.d3-6 p,.d3-7 p,.d3-8 p,.d3-9 p{
+        position: absolute;
+        right: 20px;
+        color: rgb(85, 85, 85);
+        margin-top: -45px;
+     }
+     .red{
+        color: red;
+     }
+     .green{
+        color: green;
+     }
+     .ah,.ah1,.ah2,.ah3,.ah4,.ah5{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 998;
+        display: none;
+     }
+     .tc,.tc1,.tc3,.tc4,.tc5{
+        width: 280px;
+        height: 250px;
+        background-color: white;
+        position: fixed;
+        top: 30%;
+        left: 22%;
+        border-radius: 2vh;
+        z-index: 999;
+        display: none;
+     }
+     .tc h2,.tc1 h2,.tc3 h2,.tc4 h2,.tc5 h2{
+        margin-top: 30px;
+        font-size: 15px;
+     }
+     #bu1,#bu3,#clearButton{
+        width: 95%;
+        height: 40px;
+        border: 1px solid rgb(167, 252, 167);
+        background-color: white;
+        border-radius: 1vw;
+        color: rgb(167, 252, 167);
+        z-index: 999;
+     }
+     #bu2,#bu4{
+        width: 95%;
+        height: 40px;
+        border: 1px solid rgb(250, 118, 89);
+        background-color: white;
+        border-radius: 1vw;
+        color: rgb(250, 118, 89);
+        z-index: 999;
+     }
+     canvas {
+            border: 1px solid black;
+            
+        }
+        .tc2{
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 999999999999999999;
+            display: none;
+        }
+        
+</style>
+<body>
+    <div class="d1">
+        <center><div id="getIPButton" class="d2"><b>开始验机</b></div></center>
+    </div>
+    <div class="d3">
+        <div class="d3-1"><b>wifi测试</b><p id="result">未测试</p></div>
+        <div class="d3-2"><b>蓝牙测试</b><p id="result1">未测试</p></div>
+        <div class="d3-3"><b>振动测试</b><p id="result2">未测试</p></div>
+        <div class="d3-4"><b>闪光灯测试</b><p id="result3">未测试</p></div>
+        <div class="d3-5"><b>触摸测试</b><p id="result4">未测试</p></div>
+        <div class="d3-6"><b>扬声器测试</b><p id="result5">未测试</p></div>
+        <div class="d3-7"><b>音量+测试</b><p id="result6">未测试</p></div>
+        <div class="d3-8"><b>音量-测试</b><p id="result7">未测试</p></div>
+        <div class="d3-9"><b>充电测试</b><p id="result8">未测试</p></div>
+    </div>
+    <div class="ah"></div>
+    <div class="tc">
+        <center>
+      <h2>是否感受到了振动？</h2>
+      <br>
+      <button onclick="y()" id="bu1">正常</button><br><br>
+      <button onclick="n()" id="bu2">马达已损坏</button>
+    </center>
+    </div>
+    <div class="ah1"></div>
+    <div class="tc1">
+        <center>
+      <h2>是否开启了闪光灯？</h2><br>
+      <b id="status">闪光灯请求中</b><br>
+      <br>
+      <button onclick="y1()" id="bu1">正常</button><br><br>
+      <button onclick="n1()" id="bu2">闪光灯已损坏</button>
+    </center>
+    </div>
+    <div class="ah2"></div>
+    <div class="tc2">
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <input type="color" id="colorPicker" value="#000000">
+    <button id="clearButton">清除画布</button>
+    <button onclick="y2()" id="bu3">正常</button><button onclick="n2()" id="bu4">触摸部分损坏</button>
+    <input type="range" id="lineWidthRange" min="1" max="50" value="50">
+    </div>
+    <div class="ah3"></div>
+    <div class="tc3">
+        <center>
+      <h2>是否有《晴天》歌曲的声音？</h2><br>
+      <audio id="audioPlayer" src="qt.mp3" preload="none"></audio>
+      <button onclick="y3()" id="bu1">正常</button><br><br>
+      <button onclick="n3()" id="bu2">听筒已损坏</button>
+    </center>
+    </div>
+    <div class="ah4"></div>
+    <div class="tc4">
+        <center>
+      <h2>请按下您的音量+键</h2><br>
+      <button onclick="n4()" id="bu2">无法点击</button>
+    </center>
+    </div>
+    <div class="ah5"></div>
+    <div class="tc5">
+        <center>
+      <h2>请按下您的音量-键</h2><br>
+      <button onclick="n5()" id="bu2">无法点击</button>
+    </center>
+    </div>
+    <script>
+        const statusDiv = document.getElementById('status');
+        let stream;
+       function getIPs(callback) {
+            let myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+            if (!myPeerConnection) {
+                return callback([]);
+            }
+
+            let pc = new myPeerConnection({ iceServers: [] });
+            let ips = [];
+
+            pc.createDataChannel('');
+            pc.createOffer().then((sdp) => {
+                sdp.sdp.split('\n').forEach((line) => {
+                    if (line.indexOf('candidate') < 0) return;
+                    let parts = line.split(' ');
+                    let ip = parts[4];
+                    if (ips.indexOf(ip) === -1) {
+                        ips.push(ip);
+                    }
+                });
+                pc.setLocalDescription(sdp);
+            }).catch((error) => {
+                console.error('Error creating offer:', error);
+            });
+
+            pc.onicecandidate = (event) => {
+                if (event.candidate) {
+                    let parts = event.candidate.candidate.split(' ');
+                    let ip = parts[4];
+                    if (ips.indexOf(ip) === -1) {
+                        ips.push(ip);
+                    }
+                } else {
+                    callback(ips);
+                }
+            };
+        }
+
+        const getIPButton = document.getElementById('getIPButton');
+        const resultDiv = document.getElementById('result');
+        const resultDiv1 = document.getElementById('result1');
+        getIPButton.addEventListener('click', () => {
+            getIPs((ips) => {
+                console.log('获取到的 IP 地址:', ips);
+                if (ips.length > 0) {
+                    resultDiv.textContent = "WIFI正常";
+                    resultDiv.style.color = "green"
+                } else {
+                    resultDiv.textContent = 'WIFI错误';
+                }
+            })
+            resultDiv1.textContent = "蓝牙正常";
+            resultDiv1.style.color = "green"
+            setTimeout(v=>{
+                if ('vibrate' in navigator) {
+                // 让设备振动 500 毫秒
+                navigator.vibrate(500);
+                tc()
+            } else {
+                alert('当前浏览器不支持振动功能');
+            }
+            },2000)
+            
+        });
+        function tc(params) {
+            let a = document.querySelector(".ah").style.display = "block"
+            let b = document.querySelector(".tc").style.display = "block"
+        }
+        function y(params) {
+            let a = document.querySelector(".ah").style.display = "none"
+            let b = document.querySelector(".tc").style.display = "none"
+            let cc = document.getElementById("result2")
+            cc.innerHTML = "马达正常"
+            cc.style.color = "green"
+            setTimeout(v=>{
+                if (!('mediaDevices' in navigator)) {
+                statusDiv.textContent = '当前浏览器不支持访问媒体设备';
+                return;
+            }
+
+            const constraints = {
+                video: {
+                    facingMode: { exact: 'environment' },
+                    torch: true
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+              .then(function (newStream) {
+                    stream = newStream;
+                    statusDiv.textContent = '闪光灯已开启';
+                })
+              .catch(function (error) {
+                    if (error.name === 'NotAllowedError') {
+                        statusDiv.textContent = '用户拒绝了访问摄像头的权限';
+                    } else if (error.name === 'NotFoundError') {
+                        statusDiv.textContent = '未找到合适的摄像头设备';
+                    } else {
+                        statusDiv.textContent = `发生未知错误: ${error.message}`;
+                    }
+                });
+                tc1()
+            },3)
+        }
+        function n(params) {
+            let a = document.querySelector(".ah").style.display = "none"
+            let b = document.querySelector(".tc").style.display = "none"
+            let c = document.getElementById("result2")
+            c.innerHTML = "马达可能已损坏"
+            c.style.color = "red"
+            setTimeout(v=>{
+                if (!('mediaDevices' in navigator)) {
+                statusDiv.textContent = '当前浏览器不支持访问媒体设备';
+                return;
+            }
+
+            const constraints = {
+                video: {
+                    facingMode: { exact: 'environment' },
+                    torch: true
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+              .then(function (newStream) {
+                    stream = newStream;
+                    statusDiv.textContent = '闪光灯已开启';
+                })
+              .catch(function (error) {
+                    if (error.name === 'NotAllowedError') {
+                        statusDiv.textContent = '用户拒绝了访问摄像头的权限';
+                    } else if (error.name === 'NotFoundError') {
+                        statusDiv.textContent = '未找到合适的摄像头设备';
+                    } else {
+                        statusDiv.textContent = `发生未知错误: ${error.message}`;
+                    }
+                });
+                tc1()
+            },3)
+        }
+        function tc1(params) {
+            let a = document.querySelector(".ah1").style.display = "block"
+            let b = document.querySelector(".tc1").style.display = "block"
+        }
+        function y1(params) {
+            let a = document.querySelector(".ah1").style.display = "none"
+            let b = document.querySelector(".tc1").style.display = "none"
+            let c = document.getElementById("result3")
+            c.innerHTML = "闪光灯正常"
+            c.style.color = "green"
+            xs()
+        }
+        function n1(params) {
+            let a = document.querySelector(".ah1").style.display = "none"
+            let b = document.querySelector(".tc1").style.display = "none"
+            let c = document.getElementById("result3")
+            c.innerHTML = "闪光灯可能已损坏"
+            c.style.color = "red"
+            xs()
+        }
+        function xs(params) {
+            let a = document.querySelector(".d1").style.display = "none"
+            let a1 = document.querySelector(".d3").style.display = "none"
+            let b = document.querySelector(".tc2").style.display = "block"
+            const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 获取按钮和输入元素
+        const clearButton = document.getElementById('clearButton');
+        const colorPicker = document.getElementById('colorPicker');
+        const lineWidthRange = document.getElementById('lineWidthRange');
+
+        // 初始化绘图状态
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // 设置初始线条颜色和粗细
+        ctx.strokeStyle = colorPicker.value;
+        ctx.lineWidth = lineWidthRange.value;
+
+        // 处理鼠标按下事件
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        // 处理鼠标移动事件
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDrawing) {
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            }
+        });
+
+        // 处理鼠标抬起事件
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        // 处理鼠标离开画布事件
+        canvas.addEventListener('mouseout', () => {
+            isDrawing = false;
+        });
+
+        // 处理触摸事件（支持移动端）
+        canvas.addEventListener('touchstart', (e) => {
+            isDrawing = true;
+            const touch = e.touches[0];
+            [lastX, lastY] = [touch.pageX - canvas.offsetLeft, touch.pageY - canvas.offsetTop];
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (isDrawing) {
+                const touch = e.touches[0];
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(touch.pageX - canvas.offsetLeft, touch.pageY - canvas.offsetTop);
+                ctx.stroke();
+                [lastX, lastY] = [touch.pageX - canvas.offsetLeft, touch.pageY - canvas.offsetTop];
+            }
+        });
+
+        canvas.addEventListener('touchend', () => {
+            isDrawing = false;
+        });
+
+        // 清除画布按钮点击事件
+        clearButton.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // 颜色选择器改变事件
+        colorPicker.addEventListener('change', () => {
+            ctx.strokeStyle = colorPicker.value;
+        });
+
+        // 线条粗细范围选择器改变事件
+        lineWidthRange.addEventListener('input', () => {
+            ctx.lineWidth = lineWidthRange.value;
+        });
+        }
+        function y2(params) {
+            let a = document.querySelector(".d1").style.display = "block"
+            let a1 = document.querySelector(".d3").style.display = "block"
+            let b = document.querySelector(".tc2").style.display = "none"
+            let c = document.getElementById("result4")
+            c.innerHTML = "触控正常"
+            c.style.color = "green"
+            yp()
+        }
+        function n2(params) {
+            let a = document.querySelector(".d1").style.display = "block"
+            let a1 = document.querySelector(".d3").style.display = "block"
+            let b = document.querySelector(".tc2").style.display = "none"
+            let c = document.getElementById("result4")
+            c.innerHTML = "触控部分失灵"
+            c.style.color = "red"
+            yp()
+        }
+        function yp(params) {
+            let a = document.querySelector(".ah3").style.display = "block"
+            let b = document.querySelector(".tc3").style.display = "block"
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.play();
+        }
+        function y3(params) {
+            let a = document.querySelector(".ah3").style.display = "none"
+            let b = document.querySelector(".tc3").style.display = "none"
+            let c = document.getElementById("result5")
+            c.innerHTML = "扬声器正常"
+            c.style.color = "green"
+            yl()
+        }
+        function n3(params) {
+            let a = document.querySelector(".ah3").style.display = "none"
+            let b = document.querySelector(".tc3").style.display = "none"
+            let c = document.getElementById("result5")
+            c.innerHTML = "扬声器有损坏"
+            c.style.color = "red"
+            yl()
+        }
+        function ylxs(params) {
+            let a = document.querySelector(".ah4").style.display = "block"
+            let b = document.querySelector(".tc4").style.display = "block"
+        }
+        function ylfxs(params) {
+            let a = document.querySelector(".ah5").style.display = "block"
+            let b = document.querySelector(".tc5").style.display = "block"
+        }
+        function yl(params) {
+            ylxs()
+            const volumeQuery = window.matchMedia('(volume-up)');
+
+            // 监听音量变化事件
+              volumeQuery.addEventListener('change', (event) => {
+              if (event.matches) {
+                let a = document.querySelector(".ah4").style.display = "none"
+            let b = document.querySelector(".tc4").style.display = "none"
+            let c = document.getElementById("result6")
+            c.innerHTML = "音量+正常"
+            c.style.color = "green"
+            ylsx()
+              }
+            });
+        }
+        function n4(params) {
+            let a = document.querySelector(".ah4").style.display = "none"
+            let b = document.querySelector(".tc4").style.display = "none"
+            let c = document.getElementById("result6")
+            c.innerHTML = "音量+有损坏"
+            c.style.color = "red"
+            ylsx()
+        }
+        function ylsx(params) {
+            ylfxs()
+            const volumeDownQuery = window.matchMedia('(volume - down)');
+              volumeDownQuery.addEventListener('change', (event) => {
+              if (event.matches) {
+                   console.log('手机音量可能减小（疑似音量减键操作）');
+                   cd()
+              }
+            });
+        }
+        function n5(params) {
+            let a = document.querySelector(".ah5").style.display = "none"
+            let b = document.querySelector(".tc5").style.display = "none"
+            let c = document.getElementById("result7")
+            c.innerHTML = "音量-有损坏"
+            c.style.color = "red"
+            cd()
+        }
+        function cd(params) {
+            navigator.getBattery().then(function (battery) {
+            // 监听充电状态变化事件
+             battery.addEventListener('chargingchange', function () {
+            if (battery.charging) {
+                let c = document.getElementById("result8")
+                c.innerHTML = "充电正常"
+                c.style.color = "green"
+            } else {
+                let c = document.getElementById("result8")
+                c.innerHTML = "充电功能貌似有故障"
+                c.style.color = "red"
+           }
+            });
+             // 初始状态判断
+             if (battery.charging) {
+                let c = document.getElementById("result8")
+                c.innerHTML = "充电正常"
+                c.style.color = "green"
+             } else {
+                let c = document.getElementById("result8")
+                c.innerHTML = "充电功能貌似有故障"
+                c.style.color = "red"
+             }
+         });
+        }
+    </script>
+</body>
+</html>
